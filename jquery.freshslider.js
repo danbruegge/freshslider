@@ -1,24 +1,5 @@
 // jquery.freshslider v 1.2.2
 
-/* TODO:
- *      - add a loading icon and show the slider if it is finaly loaded
- *      - more flow on size changing
- *
- */
-
-/* CHANGES:
- * - 1.2
- *      - set an active class to the active element
- *      - if purl.js and historyjs, it will possible to slide a slide via URL
- *        parameter
- *      - code optimization
- * - 1.2.1
- *      - remove strings from 'fadingSpeed' and 'timeout'
- * - 1.2.2
- *      - add stop for animations, to prevent multiply clicking
- *
- */
-
 (function ($) {
 
     'use strict';
@@ -50,7 +31,7 @@
             cycle: false,
             navType: navTypes[0],
             navContainer: slideshow,
-            history: window.History,
+            history: window.history,
             historyOn: true,
             historyParam: 'slide',
             firstSlide: function () { return true; },
