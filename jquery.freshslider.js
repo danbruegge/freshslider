@@ -328,28 +328,30 @@
         };
 
         var _isNavArrows = function () {
-            var navType = S.navType;
-
-            if (navType === navTypes[0] || navType === navTypes[2]) {
-                return true;
+            if (S.navType) {
+                if (S.navType === navTypes[0] || S.navType === navTypes[2]) {
+                    return true;
+                }
             }
 
             return false;
         };
 
         var _isNavBullets = function () {
-            var navType = S.navType;
-
-            if (navType === navTypes[1] || navType === navTypes[2]) {
-                return true;
+            if (S.navType) {
+                if (S.navType === navTypes[1] || S.navType === navTypes[2]) {
+                    return true;
+                }
             }
 
             return false;
         };
 
         var _isNavBoth = function () {
-            if (S.navType === navTypes[2]) {
-                return true;
+            if (S.navType) {
+                if (S.navType === navTypes[2]) {
+                    return true;
+                }
             }
 
             return false;
