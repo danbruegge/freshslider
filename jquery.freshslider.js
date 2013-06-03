@@ -1,4 +1,4 @@
-// jquery.freshslider v 1.2.2
+// jquery.freshslider v 1.2.3
 
 (function ($) {
 
@@ -144,7 +144,10 @@
             }
 
             // reset height to prevent ugly page loading
-            slidesInner.parent().css('height', 'auto');
+            slidesInner.parent().css({
+                height: 'auto',
+                overflow: 'visible'
+            });
 
             $(window).resize(function () {
                 _resize();
