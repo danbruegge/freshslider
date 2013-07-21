@@ -10,6 +10,7 @@
         var slideshow = this;
         var slidesInner = slideshow.find('.slides-inner:first');
         var items = slidesInner.children('.slide-item');
+        var itemsLength = items.length -1;
         var itemPos = {
             0: 0
         };
@@ -52,9 +53,9 @@
                 var param = $.url().param(S.historyParam);
 
                 items.each(function (index) {
-                    var item = $(items[index]);
-                    if (item.data('id')) {
-                        itemSlugs.push($(items[index]).data('id'));
+                    var data = $(items[index]).data();
+                    if (data.id) {
+                        itemSlugs.push(data.id);
                     } else {
                         itemSlugs.push('' + (index + 1));
                     }
@@ -66,7 +67,7 @@
                     active = parseInt(itemSlugs.indexOf(param), 10);
                 }
 
-                if (active > (items.length - 1) || active <= 0) {
+                if (active > itemsLength || active <= 0) {
                     active = 0;
                 }
 
@@ -97,7 +98,7 @@
             // AUTOSLIDE
             setTimer();
 
-            items.ready(function () {
+            slidesInner.on('ready', items, function () {
                 if (typeof S.ready === 'function') {
                     S.ready();
                 }
@@ -105,7 +106,7 @@
         };
 
         var timer = function () {
-            if (active === items.length - 1) {
+            if (active === itemsLength) {
                 if (S.cycle) {
                     reset();
                 } else {
@@ -162,12 +163,12 @@
             items.width(width);
             slideshow.children('.slides').css('width', width);
             slidesInner.css({
-                'width': width * items.length,
+                'width': width * (itemsLength + 1),
                 'margin-left': -(width * active)
             });
 
             // set the start position of each element by getting the width
-            for (i = 1; i < items.length; i++) {
+            for (i = 1; i <= itemsLength; i++) {
                 itemPos[i] = $(items[i]).width() + itemPos[i - 1];
             }
         };
@@ -182,7 +183,7 @@
                 }
             } else {
                 if (S.cycle) {
-                    active = items.length - 1;
+                    active = itemsLength;
                 } else {
                     active = 0;
                 }
@@ -193,7 +194,6 @@
 
         // moves to the next item, neccessary for position calculation
         var _nextItem = function () {
-            var itemsLength = items.length - 1;
             if ((active + 1) <= itemsLength) {
                 active = active + 1;
 
@@ -220,9 +220,10 @@
             var H = S.history;
             if (_isHistory()) {
                 var slug = itemSlugs[active];
+                var data = item.data();
 
-                if (item.data('title')) {
-                    document.title = item.data('title')
+                if (data.title) {
+                    document.title = data.title
                         + slideshow.data('title-template');
                 }
 
@@ -261,7 +262,7 @@
         };
 
         var _checkNext = function () {
-            if (active >= (items.length - 1) && !S.cycle) {
+            if (active >= itemsLength && !S.cycle) {
                 slideshow.addClass('nav-next-hidden');
             } else {
                 slideshow.removeClass('nav-next-hidden');
