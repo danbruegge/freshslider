@@ -370,6 +370,42 @@
             }
         };
 
+        var _createThumbs = function () {
+            // THUMBS
+            if (_isNavType('thumbs')) {
+                navThumbs = $('<ol class="slider-nav thumbs"/>');
+
+                $.each(items, function (index) {
+                    var thumb = $('<li />')
+                        .append($('<a/>', {
+                            'class': 'thumb',
+                            'href': '?' + S.historyParam + '=' + (index + 1)
+                        }))
+                        .append($('<img />', {
+                            'src': '' // path to the image
+                        }));
+
+                    thumb.appendTo(navThumbs);
+                });
+
+                navThumbs.on('click', 'a.thumb', function (e) {
+                    e.preventDefault();
+
+                    active = $(this).parent().index();
+                    _moveItem();
+                    setTimer();
+
+                    return false;
+                });
+
+                navBullets.appendTo(
+                    slideshow.find('.slider-nav-wrapper:first')
+                );
+
+                _setBulletActive();
+            }
+        };
+
         // start the machine...
         init();
     };
