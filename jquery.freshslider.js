@@ -132,7 +132,7 @@
         var moveToPrev = function (next, prev) {
             _prevItem();
 
-            if (_isNavType('arrows')) {
+            if (_isNavType(S.navType[0])) {
                 _checkPrev(prev);
                 _checkNext(next);
             }
@@ -142,7 +142,7 @@
         var moveToNext = function (next, prev) {
             _nextItem();
 
-            if (_isNavType('arrows')) {
+            if (_isNavType(S.navType[0])) {
                 _checkPrev(prev);
                 _checkNext(next);
             }
@@ -287,7 +287,7 @@
 
         var _setBulletActive = function () {
             // set active bullet
-            if (_isNavType('bullets')) {
+            if (_isNavType(S.navType[1])) {
                 var a = S.navContainer.find('.bullet');
                 a.removeClass('active');
                 $(a[active]).addClass('active');
@@ -296,7 +296,7 @@
 
         var _createArrows = function () {
             // ARROWS
-            if (_isNavType('arrows')) {
+            if (_isNavType(S.navType[0])) {
                 navArrows = $('<ul class="slider-nav arrows"/>');
 
                 var navArrowsItems = [];
@@ -336,7 +336,7 @@
 
         var _createBullets = function () {
             // BULLETS
-            if (_isNavType('bullets')) {
+            if (_isNavType(S.navType[1])) {
                 navBullets = $('<ol class="slider-nav bullets"/>');
 
                 $.each(items, function (index) {
