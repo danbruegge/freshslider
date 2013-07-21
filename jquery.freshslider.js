@@ -14,7 +14,7 @@
             0: 0
         };
 
-        var navTypes = ['arrows', 'bullets', 'both'];
+        var navTypes = ['arrows', 'bullets'];
         var animationTimer;
         var active = 0;
         var navBullets;
@@ -29,7 +29,7 @@
             timeout: 8000,
             autoSlide: false,
             cycle: false,
-            navType: navTypes[0],
+            navType: [navTypes[0]],
             navContainer: slideshow,
             history: window.history,
             historyOn: true,
@@ -74,6 +74,11 @@
             } else {
                 // set current slide to active
                 $(items[active]).addClass('active');
+            }
+
+            // check if S.navType is string and and convert it to an array.
+            if (typeof S.navType === 'string') {
+                S.navType = [S.navType];
             }
 
             _createArrows();
@@ -264,20 +269,16 @@
         };
 
         var _isNavArrows = function () {
-            if (S.navType) {
-                if (S.navType === navTypes[0] || S.navType === navTypes[2]) {
-                    return true;
-                }
+            if (S.navType.indexOf(navTypes[0]) > -1) {
+                return true;
             }
 
             return false;
         };
 
         var _isNavBullets = function () {
-            if (S.navType) {
-                if (S.navType === navTypes[1] || S.navType === navTypes[2]) {
-                    return true;
-                }
+            if (S.navType.indexOf(navTypes[1]) > -1) {
+                return true;
             }
 
             return false;
