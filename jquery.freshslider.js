@@ -126,15 +126,17 @@
                         'href': '?' + S.historyParam + '=' + (index + 1)
                     }));
 
-                    bullet.on('click', 'a', function () {
-                        active = $(this).parent().index();
-                        _moveItem();
-                        setTimer();
-
-                        return false;
-                    });
-
                     bullet.appendTo(navBullets);
+                });
+
+                navBullets.on('click', 'a.bullet', function (e) {
+                    e.preventDefault();
+
+                    active = $(this).parent().index();
+                    _moveItem();
+                    setTimer();
+
+                    return false;
                 });
 
                 navBullets.appendTo(
