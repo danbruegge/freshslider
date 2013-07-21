@@ -76,74 +76,8 @@
                 $(items[active]).addClass('active');
             }
 
-            // ARROWS
-            if (_isNavArrows()) {
-                navArrows = $('<ul class="slider-nav arrows"/>');
-
-                var navArrowsItems = [];
-                $.each(['prev', 'next'], function (key, name) {
-                    navArrowsItems.push($('<li/>').append($('<a/>', {
-                        'class': 'arrow ' + name,
-                        'title': 'Slide to ' + name,
-                        'text': name
-                    })));
-                });
-
-                S.navContainer.remove('.slider-nav.arrows');
-                S.navContainer.append(navArrows.append(navArrowsItems));
-
-                var navPrev = navArrows.find('.prev');
-                var navNext = navArrows.find('.next');
-
-                _checkPrev(navPrev);
-                _checkNext(navNext);
-
-                navPrev.on('click', function () {
-                    moveToPrev(navNext, navPrev);
-                    setTimer();
-
-                    return false;
-                });
-
-                navNext.on('click', function () {
-                    moveToNext(navNext, navPrev);
-                    setTimer();
-
-                    return false;
-                });
-            }
-
-            // BULLETS
-            if (_isNavBullets()) {
-                navBullets = $('<ol class="slider-nav bullets"/>');
-
-                $.each(items, function (index) {
-                    var text = 'Slide ' + (index + 1);
-                    var bullet = $('<li />').append($('<a/>', {
-                        'class': 'bullet',
-                        'title': text,
-                        'text': text,
-                        'href': '?' + S.historyParam + '=' + (index + 1)
-                    }));
-
-                    bullet.appendTo(navBullets);
-                });
-
-                navBullets.on('click', 'a.bullet', function (e) {
-                    e.preventDefault();
-
-                    active = $(this).parent().index();
-                    _moveItem();
-                    setTimer();
-
-                    return false;
-                });
-
-                navBullets.appendTo(
-                    slideshow.find('.slider-nav-wrapper:first')
-                );
-                _setBulletActive();
-            }
+            _createArrows();
+            _createBullets();
 
             // reset height to prevent ugly page loading
             slidesInner.parent().css({
@@ -349,16 +283,6 @@
             return false;
         };
 
-        var _isNavBoth = function () {
-            if (S.navType) {
-                if (S.navType === navTypes[2]) {
-                    return true;
-                }
-            }
-
-            return false;
-        };
-
         var _isHistory = function () {
             var isPurl = typeof $.url === 'function';
             if (S.historyOn && S.history.enabled && isPurl) {
@@ -374,6 +298,81 @@
                 var a = S.navContainer.find('.bullet');
                 a.removeClass('active');
                 $(a[active]).addClass('active');
+            }
+        };
+
+        var _createArrows = function () {
+            // ARROWS
+            if (_isNavArrows()) {
+                navArrows = $('<ul class="slider-nav arrows"/>');
+
+                var navArrowsItems = [];
+                $.each(['prev', 'next'], function (key, name) {
+                    navArrowsItems.push($('<li/>').append($('<a/>', {
+                        'class': 'arrow ' + name,
+                        'title': 'Slide to ' + name,
+                        'text': name
+                    })));
+                });
+
+                S.navContainer
+                    .remove('.slider-nav.arrows')
+                    .append(navArrows.append(navArrowsItems));
+
+                var navPrev = navArrows.find('.prev');
+                var navNext = navArrows.find('.next');
+
+                _checkPrev(navPrev);
+                _checkNext(navNext);
+
+                navPrev.on('click', function () {
+                    moveToPrev(navNext, navPrev);
+                    setTimer();
+
+                    return false;
+                });
+
+                navNext.on('click', function () {
+                    moveToNext(navNext, navPrev);
+                    setTimer();
+
+                    return false;
+                });
+            }
+        };
+
+        var _createBullets = function () {
+            // BULLETS
+            if (_isNavBullets()) {
+                navBullets = $('<ol class="slider-nav bullets"/>');
+
+                $.each(items, function (index) {
+                    var text = 'Slide ' + (index + 1);
+                    var bullet = $('<li />').append($('<a/>', {
+                        'class': 'bullet',
+                        'title': text,
+                        'text': text,
+                        'href': '?' + S.historyParam + '=' + (index + 1)
+                    }));
+
+                    bullet.appendTo(navBullets);
+                });
+
+                navBullets.on('click', 'a.bullet', function (e) {
+                    e.preventDefault();
+
+                    active = $(this).parent().index();
+                    _moveItem();
+                    setTimer();
+
+                    return false;
+                });
+
+                navBullets.appendTo(
+                    slideshow.find('.slider-nav-wrapper:first')
+                );
+
+                _setBulletActive();
             }
         };
 
