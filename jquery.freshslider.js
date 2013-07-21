@@ -1,4 +1,4 @@
-// jquery.freshslider v 1.2.3
+// jquery.freshslider v 1.2.4
 
 (function ($) {
 
